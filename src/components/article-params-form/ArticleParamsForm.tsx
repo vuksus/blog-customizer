@@ -58,7 +58,7 @@ export const ArticleParamsForm = ({ setFormState }: ArcticleForm) => {
 				})}>
 				<form className={styles.form} ref={refForm}>
 					<Text as={'h2'} size={31} weight={800} uppercase={true}>
-						задайте параметры.
+						задайте параметры
 					</Text>
 					<Select
 						placeholder={defaultArticleState.fontFamilyOption.title}
