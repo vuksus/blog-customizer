@@ -18,19 +18,24 @@ import {
 import clsx from 'clsx';
 import { Separator } from 'src/ui/separator';
 
-type ArcticleForm = {
-	setFormState: React.Dispatch<React.SetStateAction<ArticleStateType>>;
+type ArticleParamForm = {
+	setFormStateStyles: React.Dispatch<React.SetStateAction<ArticleStateType>>;
 };
 
-export const ArticleParamsForm = ({ setFormState }: ArcticleForm) => {
+export const ArticleParamsForm = ({ setFormStateStyles }: ArticleParamForm) => {
 	const [formOpen, setFormOpen] = useState<boolean>(false);
-	const [formTime, setFormTime] =
+	const [formStateNow, setFormStateNow] =
 		useState<ArticleStateType>(defaultArticleState);
 
 	const refForm = useRef<HTMLFormElement | null>(null);
 	const refButton = useRef<HTMLDivElement | null>(null);
 
 	const toggleForm = () => setFormOpen((value) => !value);
+
+	const handleChange =
+		<K extends keyof ArticleStateType>(key: K) =>
+		(value: ArticleStateType[K]) =>
+			setFormStateNow((prev) => ({ ...prev, [key]: value }));
 
 	useEffect(() => {
 		const handleClick = (e: MouseEvent) => {
@@ -43,6 +48,9 @@ export const ArticleParamsForm = ({ setFormState }: ArcticleForm) => {
 				setFormOpen(false);
 			}
 		};
+		if (!formOpen) {
+			return;
+		}
 		document.addEventListener('click', handleClick);
 		return () => {
 			document.removeEventListener('click', handleClick);
@@ -63,60 +71,38 @@ export const ArticleParamsForm = ({ setFormState }: ArcticleForm) => {
 					<Select
 						placeholder={defaultArticleState.fontFamilyOption.title}
 						title='шрифт'
-						selected={formTime.fontFamilyOption}
+						selected={formStateNow.fontFamilyOption}
 						options={fontFamilyOptions}
-						onChange={(value) =>
-							setFormTime((prevState) => ({
-								...prevState,
-								fontFamilyOption: value,
-							}))
-						}
+						onChange={handleChange('fontFamilyOption')}
 					/>
 					<RadioGroup
 						name='размер шрифта'
 						title='размер шрифта'
-						selected={formTime.fontSizeOption}
+						selected={formStateNow.fontSizeOption}
 						options={fontSizeOptions}
-						onChange={(value) =>
-							setFormTime((prevState) => ({
-								...prevState,
-								fontSizeOption: value,
-							}))
-						}
+						onChange={handleChange('fontSizeOption')}
 					/>
 					<Select
 						placeholder={defaultArticleState.fontColor.title}
 						title='цвет шрифта'
-						selected={formTime.fontColor}
+						selected={formStateNow.fontColor}
 						options={fontColors}
-						onChange={(value) =>
-							setFormTime((prevState) => ({ ...prevState, fontColor: value }))
-						}
+						onChange={handleChange('fontColor')}
 					/>
 					<Separator />
 					<Select
 						placeholder={defaultArticleState.backgroundColor.title}
 						title='цвет фона'
-						selected={formTime.backgroundColor}
+						selected={formStateNow.backgroundColor}
 						options={backgroundColors}
-						onChange={(value) =>
-							setFormTime((prevState) => ({
-								...prevState,
-								backgroundColor: value,
-							}))
-						}
+						onChange={handleChange('backgroundColor')}
 					/>
 					<Select
 						placeholder={defaultArticleState.fontSizeOption.title}
 						title='ширина контента'
-						selected={formTime.contentWidth}
+						selected={formStateNow.contentWidth}
 						options={contentWidthArr}
-						onChange={(value) =>
-							setFormTime((prevState) => ({
-								...prevState,
-								contentWidth: value,
-							}))
-						}
+						onChange={handleChange('contentWidth')}
 					/>
 					<div className={styles.bottomContainer}>
 						<Button
@@ -124,8 +110,8 @@ export const ArticleParamsForm = ({ setFormState }: ArcticleForm) => {
 							htmlType='reset'
 							type='clear'
 							onClick={() => {
-								setFormState(defaultArticleState);
-								setFormTime(defaultArticleState);
+								setFormStateStyles(defaultArticleState);
+								setFormStateNow(defaultArticleState);
 							}}
 						/>
 						<Button
@@ -134,7 +120,7 @@ export const ArticleParamsForm = ({ setFormState }: ArcticleForm) => {
 							type='apply'
 							onClick={(event) => {
 								event.preventDefault();
-								setFormState(formTime);
+								setFormStateStyles(formStateNow);
 							}}
 						/>
 					</div>
