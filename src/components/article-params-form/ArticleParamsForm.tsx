@@ -19,7 +19,7 @@ import clsx from 'clsx';
 import { Separator } from 'src/ui/separator';
 
 type ArticleParamForm = {
-	setFormStateStyles: React.Dispatch<React.SetStateAction<ArticleStateType>>;
+	setFormStateStyles: (value: ArticleStateType) => void;
 };
 
 export const ArticleParamsForm = ({ setFormStateStyles }: ArticleParamForm) => {
@@ -98,7 +98,7 @@ export const ArticleParamsForm = ({ setFormStateStyles }: ArticleParamForm) => {
 						onChange={handleChange('backgroundColor')}
 					/>
 					<Select
-						placeholder={defaultArticleState.fontSizeOption.title}
+						placeholder={defaultArticleState.contentWidth.title}
 						title='ширина контента'
 						selected={formStateNow.contentWidth}
 						options={contentWidthArr}
