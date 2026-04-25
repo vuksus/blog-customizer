@@ -10,7 +10,7 @@ import {
 import styles from './app.module.scss';
 
 export const App = () => {
-	const [formStateStyles, setFormStateStyles] =
+	const [articleStateStyles, setArticleStateStyles] =
 		useState<ArticleStateType>(defaultArticleState);
 
 	return (
@@ -18,14 +18,14 @@ export const App = () => {
 			className={styles.main}
 			style={
 				{
-					'--font-family': formStateStyles.fontFamilyOption.value,
-					'--font-size': formStateStyles.fontSizeOption.value,
-					'--font-color': formStateStyles.fontColor.value,
-					'--container-width': formStateStyles.contentWidth.value,
-					'--bg-color': formStateStyles.backgroundColor.value,
+					'--font-family': articleStateStyles.fontFamilyOption.value,
+					'--font-size': articleStateStyles.fontSizeOption.value,
+					'--font-color': articleStateStyles.fontColor.value,
+					'--container-width': articleStateStyles.contentWidth.value,
+					'--bg-color': articleStateStyles.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm setFormStateStyles={setFormStateStyles} />
+			<ArticleParamsForm setArticleStateStyles={setArticleStateStyles} />
 			<Article />
 		</main>
 	);

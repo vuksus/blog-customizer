@@ -19,10 +19,12 @@ import clsx from 'clsx';
 import { Separator } from 'src/ui/separator';
 
 type ArticleParamForm = {
-	setFormStateStyles: (value: ArticleStateType) => void;
+	setArticleStateStyles: (value: ArticleStateType) => void;
 };
 
-export const ArticleParamsForm = ({ setFormStateStyles }: ArticleParamForm) => {
+export const ArticleParamsForm = ({
+	setArticleStateStyles,
+}: ArticleParamForm) => {
 	const [formOpen, setFormOpen] = useState<boolean>(false);
 	const [formStateNow, setFormStateNow] =
 		useState<ArticleStateType>(defaultArticleState);
@@ -110,7 +112,7 @@ export const ArticleParamsForm = ({ setFormStateStyles }: ArticleParamForm) => {
 							htmlType='reset'
 							type='clear'
 							onClick={() => {
-								setFormStateStyles(defaultArticleState);
+								setArticleStateStyles(defaultArticleState);
 								setFormStateNow(defaultArticleState);
 							}}
 						/>
@@ -120,7 +122,7 @@ export const ArticleParamsForm = ({ setFormStateStyles }: ArticleParamForm) => {
 							type='apply'
 							onClick={(event) => {
 								event.preventDefault();
-								setFormStateStyles(formStateNow);
+								setArticleStateStyles(formStateNow);
 							}}
 						/>
 					</div>
